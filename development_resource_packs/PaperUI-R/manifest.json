@@ -1,0 +1,29 @@
+{
+    "format_version": 1,
+    "header": {
+        "name": "Dahymuhn's Descent",
+        "description": "DD-R",
+        "uuid": "cf8724f3-2200-4ec2-af0b-e4c9c317de9b",
+        "version": [
+            0,
+            0,
+            4
+        ],
+        "min_engine_version": [
+            1,
+            12,
+            1
+        ]
+    },
+    "modules": [
+        {
+            "type": "resources",
+            "uuid": "7ca9a46e-313f-4336-958f-2c3dc94e61f9",
+            "version": [
+                0,
+                0,
+                4
+            ]
+        }
+    ]
+}
