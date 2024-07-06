@@ -5,7 +5,7 @@
         "description": "DD-R",
         "uuid": "cf8724f3-2200-4ec2-af0b-e4c9c317de9b",
         "version": [
-            0,
+            1,
             0,
             4
         ],
@@ -20,7 +20,7 @@
             "type": "resources",
             "uuid": "7ca9a46e-313f-4336-958f-2c3dc94e61f9",
             "version": [
-                0,
+                1,
                 0,
                 4
             ]
