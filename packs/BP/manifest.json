@@ -1,0 +1,58 @@
+{
+	"format_version": 2,
+	"header": {
+		"name": "PaperUI",
+		"version": [
+			1,
+			0,
+			0
+		],
+		"description": "UI system made my Paperweightt",
+		"uuid": "887d0c9f-007b-43da-b49e-45eb06e93f39",
+		"min_engine_version": [
+			1,
+			20,
+			30
+		]
+	},
+	"modules": [
+		{
+			"type": "data",
+			"uuid": "451d1434-e26a-4f6b-bd8a-6629a8135a14",
+			"version": [
+				1,
+				0,
+				0
+			]
+		},
+		{
+			"type": "script",
+			"language": "javascript",
+			"uuid": "56cefc60-9171-4703-9bcc-9f8e6b1d27b3",
+			"version": [
+				1,
+				0,
+				3
+			],
+			"entry": "scripts/main.js"
+		}
+	],
+	"dependencies": [
+		{
+			"version": [
+				1,
+				0,
+				0
+			],
+			"uuid": "720f8ec6-0bb1-4d69-ab3a-0a67dd0c4923"
+		},
+		{
+			"module_name": "@minecraft/server",
+			"version": "1.11.0"
+		},
+		{
+			"module_name": "@minecraft/server-ui",
+			"version": "1.1.0"
+		}
+	]
+}
