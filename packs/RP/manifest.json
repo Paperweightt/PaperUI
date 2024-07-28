@@ -3,7 +3,7 @@
     "header": {
         "name": "PaperUI",
         "description": "UI system made by Paperweightt",
-        "uuid": "cf8724f3-2200-4ec2-af0b-e4c9c317de9b",
+        "uuid": "8d6a7504-2966-4fe4-8864-e07005233b74",
         "version": [
             1,
             0,
@@ -18,7 +18,7 @@
     "modules": [
         {
             "type": "resources",
-            "uuid": "4ea69f1a-617e-40c9-961d-62cb942c0885",
+            "uuid": "34b730ab-f3c2-45c4-938f-2d30f16411ab",
             "version": [
                 1,
                 0,

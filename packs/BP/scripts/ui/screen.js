@@ -1,6 +1,6 @@
 import { world } from "@minecraft/server" // TODO: remove
 import { Panel } from "./panel"
-import { Vector } from "../vector"
+import { Vector } from "../util/vector"
 
 export class Screen {
 	updates = new Set()
@@ -14,7 +14,7 @@ export class Screen {
 	constructor(location, dimension, rotation) {
 		this.location = location
 		this.dimension = dimension
-		this.rotation = rotation
+		this.rotation = rotation || { x: 0, y: 0 }
 	}
 
 	setRotation({ x, y }) {
@@ -69,7 +69,7 @@ export class Screen {
 
 		element.offset = { x, y }
 		element.parentElement = this
-		element.setScreen(this) // TODO:what does this do?
+		element.setScreen(this) // TODO: figure out what this does
 		element.update()
 		element.updateChildElements()
 

@@ -8,7 +8,7 @@
 			0
 		],
 		"description": "UI system made my Paperweightt",
-		"uuid": "887d0c9f-007b-43da-b49e-45eb06e93f39",
+		"uuid": "d7716ad7-bc38-4ca8-810b-f615c73a28bf",
 		"min_engine_version": [
 			1,
 			20,
@@ -18,7 +18,7 @@
 	"modules": [
 		{
 			"type": "data",
-			"uuid": "451d1434-e26a-4f6b-bd8a-6629a8135a14",
+			"uuid": "cec80e24-5295-4ea2-85b3-4910050b18fa",
 			"version": [
 				1,
 				0,
@@ -28,7 +28,7 @@
 		{
 			"type": "script",
 			"language": "javascript",
-			"uuid": "56cefc60-9171-4703-9bcc-9f8e6b1d27b3",
+			"uuid": "d5b0c51f-3a6f-4f6a-ae49-3dcbb77f8535",
 			"version": [
 				1,
 				0,
@@ -44,7 +44,7 @@
 				0,
 				0
 			],
-			"uuid": "720f8ec6-0bb1-4d69-ab3a-0a67dd0c4923"
+			"uuid": "048a833a-bd7a-4805-955e-e409125c7dea"
 		},
 		{
 			"module_name": "@minecraft/server",

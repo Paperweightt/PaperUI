@@ -1,15 +1,31 @@
 import { world, system } from "@minecraft/server"
-import { PunchEvent } from "../punchEvent"
+import { PunchEvent } from "../util/punchEvent"
+import { molang } from "./font/molang"
 
 export class Element {
 	resetList = []
 	elements = {}
 	pixels = {}
-	height = 0
 	elementMovingIndex = 0
-	width = 0
 	offset = { x: 0, y: 0 }
+	_height = 0
+	_width = 0
 
+	get height() {
+		return this._height
+	}
+
+	set height(int) {
+		this._height = int
+	}
+
+	get width() {
+		return this._width
+	}
+
+	set width(int) {
+		this._width = int
+	}
 
 	setPixel(x, y, boolean) {
 		if (this.pixels[[x, y]] !== boolean) {
@@ -47,6 +63,9 @@ export class Element {
 		element.removeAllPixels()
 		for (const callback of element.resetList) {
 			callback()
+		}
+		for (const childElement of Object.values(element.elements)) {
+			element.removeElement(childElement)
 		}
 		delete this.elements[element.id]
 		element.screen.update()
@@ -97,12 +116,11 @@ export class TextElement extends Element {
 	newLinePadding = 9
 	center = false
 
-	constructor(font, string = "", textOptions = {}) {
+	constructor(string = "", textOptions = {}) {
 		super()
-		this.font = font
 		this.string = string
 		this.height = this.string.split("\n").length * this.newLinePadding
-
+		this.font = molang
 		for (const [key, value] of Object.entries(textOptions)) {
 			this[key] = value
 		}
@@ -218,16 +236,12 @@ export class ButtonElement extends Element {
 	hover = false
 	runHover = true
 
-	constructor(x1, y1, x2, y2, string, font) {
+	constructor(width, height, string, font = molang) {
 		super()
-		this.x1 = x1
-		this.y1 = y1
-		this.x2 = x2
-		this.y2 = y2
 		this.string = string
 		this.font = font
-		this.width = x2 - x1
-		this.height = y2 - y1
+		this.width = width
+		this.height = height
 	}
 
 	update() {
@@ -240,7 +254,7 @@ export class ButtonElement extends Element {
 	addOnClick(callback) {
 		PunchEvent.addCallback((player) => {
 			const { x, y } = this.getPointer(player)
-			if (x > this.x1 && y > this.y1 && y < this.y2 && x < this.x2) {
+			if (x > 0 && y > 0 && y < this.height && x < this.width) {
 				this.endHoverEffect()
 				this.hover = false
 
@@ -262,7 +276,7 @@ export class ButtonElement extends Element {
 
 			for (const player of world.getPlayers()) {
 				const { x, y } = this.getPointer(player)
-				if (x > this.x1 && y > this.y1 && y < this.y2 && x < this.x2) {
+				if (x > 0 && y > 0 && y < this.height && x < this.width) {
 					bool = true
 					player.hover = true
 				} else {
@@ -279,37 +293,31 @@ export class ButtonElement extends Element {
 				this.endHoverEffect()
 				this.hover = false
 			}
-		}, 3)
+		}, 1)
 		this.resetList.push(() => {
 			system.clearRun(this.hoverId)
 		})
 	}
 
 	addString() {
-		this.textElement = new TextElement(this.font, this.string)
-		this.textElement.center = true
-		const x = this.width / 2
-		const y = Math.floor((this.height - this.textElement.height) / 2)
+		this.textElement = new TextElement(this.string, { center: true, font: molang })
+		// this.textElement.center = true
+		const x = Math.floor((this.width - 1) / 2)
+		const y = Math.floor((this.height - 1 - this.textElement.height) / 2)
 		this.addElement(this.textElement, x, y)
 	}
 
 	addBox() {
-		this.boxElement = new ShapeElement(
-			"box",
-			this.x1,
-			this.y1,
-			this.x2,
-			this.y2,
-		)
+		this.boxElement = new ShapeElement("box", 0, 0, this.width - 1, this.height - 1)
 		this.addElement(this.boxElement)
 	}
 
 	startHoverEffect() {
 		this.hoverBox = [
-			new ShapeElement("line", 2, 1, this.x2 - 1, 1),
-			new ShapeElement("line", 2, this.y2 - 1, this.x2 - 1, this.y2 - 1),
-			new ShapeElement("line", 1, 2, 1, this.y2 - 1),
-			new ShapeElement("line", this.x2 - 1, 2, this.x2 - 1, this.y2 - 1),
+			new ShapeElement("line", 2, 1, this.width - 2, 1),
+			new ShapeElement("line", 2, this.height - 2, this.width - 2, this.height - 2),
+			new ShapeElement("line", 1, 2, 1, this.height - 2),
+			new ShapeElement("line", this.width - 2, 2, this.width - 2, this.height - 2),
 		]
 		for (const element of this.hoverBox) {
 			this.addElement(element)
@@ -321,6 +329,48 @@ export class ButtonElement extends Element {
 			this.removeElement(element)
 		}
 	}
-
-
 }
+
+export class StackElement extends Element {
+	get width() {
+		let width = 0
+
+		for (const element of Object.values(this.elements)) {
+			if (this.direction === "horizontal") {
+				width += element.width + this.stackOffset + 2
+			} else if (element.width > width) {
+				width = element.width
+			}
+		}
+
+		return width
+	}
+
+	get height() {
+		let height = 0
+
+		for (const element of Object.values(this.elements)) {
+			if (this.direction === "vertical") {
+				height += element.height + this.stackOffset + 2
+			} else if (element.height > height) {
+				height = element.height
+			}
+		}
+
+		return height
+	}
+
+	constructor(direction, stackOffset = 0) {
+		super()
+		this.direction = direction
+		this.stackOffset = stackOffset
+	}
+	addElement(element) {
+		if (this.direction === "horizontal") {
+			super.addElement(element, this.width, 0)
+		} else {
+			super.addElement(element, 0, -this.height)
+		}
+	}
+}
+

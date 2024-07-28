@@ -3,7 +3,7 @@ import { world, system } from '@minecraft/server'
 export class Panel {
 	static WIDTH = 32
 	static HEIGHT = 32
-	static FIRST_RUN_TIMEOUT = 20
+	static FIRST_RUN_TIMEOUT = 4
 
 	firstLoad = true
 	instructions = []

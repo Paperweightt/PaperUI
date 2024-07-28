@@ -2,7 +2,7 @@ import { world, system } from "@minecraft/server"
 import { Vector } from "./util/vector"
 import { Screen } from "./ui/screen"
 import { ButtonElement, ShapeElement, Element, TextElement } from "./ui/screenElements"
-import { molang } from ".ui/font/molang"
+import { molang } from "./ui/font/molang"
 
 const overworld = world.getDimension("overworld")
 
@@ -115,25 +115,25 @@ class Snake {
 }
 
 
-const panelLocation = new Vector(-68, -50, -4)
+const panelLocation = new Vector(0, -50, 0)
 const panelRotation = { x: 0, y: 54 }
 
 const screen = new Screen(panelLocation, overworld, panelRotation)
 const gamePanel = new ShapeElement("box", 0, 0, 76, 48)
-const scoreDisplay = new TextElement(molang)
+const scoreDisplay = new TextElement()
 
 screen.addElement(new ShapeElement("box", 0, 0, 80, 80))
 screen.addElement(gamePanel, 2, 30)
-screen.addElement(new TextElement(molang, "snake", { center: true }), 40, 80)
+screen.addElement(new TextElement("snake", { center: true }), 40, 80)
 
 const snake = new Snake(gamePanel, scoreDisplay)
 
 const buttonPanel = new Element()
 
-const wButton = new ButtonElement(0, 0, 12, 12, "W", molang)
-const aButton = new ButtonElement(0, 0, 12, 12, "A", molang)
-const sButton = new ButtonElement(0, 0, 12, 12, "S", molang)
-const dButton = new ButtonElement(0, 0, 12, 12, "D", molang)
+const wButton = new ButtonElement(13, 13, "W")
+const aButton = new ButtonElement(13, 13, "A")
+const sButton = new ButtonElement(13, 13, "S")
+const dButton = new ButtonElement(13, 13, "D")
 
 wButton.addOnClick(() => {
     if (snake.facing !== "s") snake.facing = "n"
