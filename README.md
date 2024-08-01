@@ -1,4 +1,4 @@
-PaperUI works by running animations on an entity to make pixels visible or non-visible, its a simple idea, now lets take it and run with it
+PaperUI works by running animations on an entity to make pixels visible or non-visible
 
 WARNING: 3/5 on the lag scale :')
 
