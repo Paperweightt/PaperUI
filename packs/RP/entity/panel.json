@@ -7,8 +7,6 @@
                 "default": "entity_alphatest"
             },
             "textures": {
-                "blue": "textures/blocks/concrete_blue",
-                "red": "textures/blocks/concrete_red",
                 "default": "textures/blocks/concrete_white"
             },
             "geometry": {

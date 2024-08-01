@@ -13,6 +13,10 @@ export class Panel {
 		this.entity = dimension.spawnEntity("ptb:panel", location)
 	}
 
+	remove() {
+		this.entity.remove()
+	}
+
 	clear() {
 		for (let x = 0; x < Panel.WIDTH; x++) {
 			for (let y = 0; y < Panel.HEIGHT; y++) {

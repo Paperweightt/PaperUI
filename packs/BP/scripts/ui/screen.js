@@ -1,12 +1,11 @@
-import { world } from "@minecraft/server" // TODO: remove
 import { Panel } from "./panel"
 import { Vector } from "../util/vector"
+import { system } from "@minecraft/server"
 
 export class Screen {
 	updates = new Set()
 	panels = {}
 	elementMovingIndex = 0
-	// elements = []
 	elements = {}
 	detectPointer = false
 	rotation = { x: 0, y: 0 }
@@ -52,6 +51,9 @@ export class Screen {
 		const location = Vector.rotate(new Vector(x, y, 0), 0, yRotation, 0)
 		const panel = new Panel(Vector.add(location, this.location), this.dimension)
 		panel.entity.setRotation(this.rotation)
+		// system.runTimeout(() => {
+		// 	panel.entity.teleport(Vector.add(panel.entity.location), new Vector(0, 0.0001, 0))
+		// }, 2)
 		this.panels[[x, y]] = panel
 	}
 
@@ -69,7 +71,7 @@ export class Screen {
 
 		element.offset = { x, y }
 		element.parentElement = this
-		element.setScreen(this) // TODO: figure out what this does
+		element.setScreen(this) // TODO: recursively sets the child element screen
 		element.update()
 		element.updateChildElements()
 
@@ -78,8 +80,23 @@ export class Screen {
 
 	removeElement(element) {
 		element.removeAllPixels()
+		for (const callback of element.resetList) {
+			callback()
+		}
+		for (const childElement of Object.values(element.elements)) {
+			element.removeElement(childElement)
+		}
 		delete this.elements[element.id]
-		screen.update()
+	}
+
+	remove() {
+		for (const element of Object.values(this.elements)) {
+			this.removeElement(element)
+		}
+		for (const panel of Object.values(this.panels)) {
+			panel.remove()
+		}
+		delete this
 	}
 
 	getPixel(x, y) {
@@ -88,6 +105,7 @@ export class Screen {
 		}
 		return 0
 	}
+
 	addUpdate(x, y) {
 		this.updates.add([x, y])
 	}

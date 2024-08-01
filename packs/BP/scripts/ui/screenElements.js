@@ -68,14 +68,10 @@ export class Element {
 			element.removeElement(childElement)
 		}
 		delete this.elements[element.id]
-		element.screen.update()
 	}
 
 	addElement(element, x = 0, y = 0) {
-		element.offset = {
-			x: x,
-			y: y
-		}
+		element.offset = { x, y }
 		this.elements[this.elementMovingIndex] = element
 		element.id = this.elementMovingIndex
 		this.elementMovingIndex++
@@ -84,9 +80,9 @@ export class Element {
 		if (this.screen) {
 			element.screen = this.screen
 			element.update()
-			this.screen.update()
 		}
 	}
+
 	updateChildElements() {
 		for (const element of Object.values(this.elements)) {
 			element.update()
@@ -94,9 +90,7 @@ export class Element {
 		}
 	}
 
-	update() {
-		this.screen.update()
-	}
+	update() { }
 
 	setScreen(screen) {
 		this.screen = screen
@@ -129,7 +123,6 @@ export class TextElement extends Element {
 	update() {
 		this.removeAllPixels()
 		this.addStringPixels()
-		super.update()
 	}
 
 	addStringPixels() {
@@ -193,8 +186,6 @@ export class ShapeElement extends Element {
 
 	update() {
 		this[this.shape](this.x1, this.y1, this.x2, this.y2)
-		// this.setPixel(1, 1, 1)
-		super.update()
 	}
 
 	line(x1, y1, x2, y2) {
@@ -248,11 +239,10 @@ export class ButtonElement extends Element {
 		this.addBox()
 		this.addString()
 		this.runInterval()
-		super.update()
 	}
 
 	addOnClick(callback) {
-		PunchEvent.addCallback((player) => {
+		const id = PunchEvent.addCallback((player) => {
 			const { x, y } = this.getPointer(player)
 			if (x > 0 && y > 0 && y < this.height && x < this.width) {
 				this.endHoverEffect()
@@ -266,6 +256,9 @@ export class ButtonElement extends Element {
 				callback({ player, x, y })
 			}
 		})
+		this.resetList.push(() => {
+			PunchEvent.removeCallback(id)
+		})
 	}
 
 	runInterval() {
@@ -278,9 +271,7 @@ export class ButtonElement extends Element {
 				const { x, y } = this.getPointer(player)
 				if (x > 0 && y > 0 && y < this.height && x < this.width) {
 					bool = true
-					player.hover = true
-				} else {
-					player.hover = false
+					break
 				}
 			}
 
@@ -288,12 +279,15 @@ export class ButtonElement extends Element {
 				if (!this.hover) {
 					this.startHoverEffect()
 					this.hover = true
+					this.screen.update()
 				}
 			} else if (this.hover) {
 				this.endHoverEffect()
 				this.hover = false
+				this.screen.update()
 			}
-		}, 1)
+		},)
+
 		this.resetList.push(() => {
 			system.clearRun(this.hoverId)
 		})
@@ -301,15 +295,13 @@ export class ButtonElement extends Element {
 
 	addString() {
 		this.textElement = new TextElement(this.string, { center: true, font: molang })
-		// this.textElement.center = true
 		const x = Math.floor((this.width - 1) / 2)
 		const y = Math.floor((this.height - 1 - this.textElement.height) / 2)
 		this.addElement(this.textElement, x, y)
 	}
 
 	addBox() {
-		this.boxElement = new ShapeElement("box", 0, 0, this.width - 1, this.height - 1)
-		this.addElement(this.boxElement)
+		this.addElement(new ShapeElement("box", 0, 0, this.width - 1, this.height - 1))
 	}
 
 	startHoverEffect() {
@@ -373,4 +365,3 @@ export class StackElement extends Element {
 		}
 	}
 }
-

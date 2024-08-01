@@ -2,7 +2,6 @@ import { Shape } from "./shape"
 import { ButtonElement, StackElement } from "./ui/screenElements"
 import { BUTTON_HEIGHT, BUTTON_WIDTH } from "./buildToolsMenu"
 import { KeyIntElement } from "./customElements"
-import { world } from "@minecraft/server"
 
 export class BuildTools {
     static mainOptions = {
@@ -17,8 +16,9 @@ export class BuildTools {
 
 BuildTools.addOption("Shape", (horizStack) => {
     for (const element of Object.values(horizStack.elements)) {
-        world.sendMessage(element.offset.x + "")
-        // horizStack.removeElement(element)
+        if (element.offset.x > 55) {
+            horizStack.removeElement(element)
+        }
     }
 
     const vertStack = new StackElement("vertical")
@@ -28,6 +28,11 @@ BuildTools.addOption("Shape", (horizStack) => {
         const button = new ButtonElement(BUTTON_WIDTH, BUTTON_HEIGHT, name)
 
         button.addOnClick(() => {
+            for (const element of Object.values(horizStack.elements)) {
+                if (element.offset.x > 111) {
+                    horizStack.removeElement(element)
+                }
+            }
             const verticalStack = new StackElement("vertical")
             horizStack.addElement(verticalStack)
 
@@ -46,9 +51,7 @@ BuildTools.addOption("Replace")
 
 BuildTools.addOption("Rotation", (horizStack) => {
     for (const element of Object.values(horizStack.elements)) {
-        // world.sendMessage(element.offset.x + "")
         if (element.offset.x > 55) {
-            element.removeAllPixels()
             horizStack.removeElement(element)
         }
     }

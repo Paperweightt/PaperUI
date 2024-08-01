@@ -1,10 +1,16 @@
 import { world, system } from "@minecraft/server"
 
 export class PunchEvent {
-	static callbacks = []
+	static id = 0
+	static callbacks = {}
 
 	static addCallback(callback) {
-		PunchEvent.callbacks.push(callback)
+		this.id++
+		PunchEvent.callbacks[this.id] = callback
+		return this.id
+	}
+	static removeCallback(id) {
+		delete this.callbacks[id]
 	}
 }
 
@@ -13,7 +19,7 @@ system.runInterval(() => {
 		if (!player.hasTag("swing")) continue
 		player.removeTag("swing")
 
-		for (const callback of PunchEvent.callbacks) {
+		for (const callback of Object.values(PunchEvent.callbacks)) {
 			callback(player)
 		}
 	}

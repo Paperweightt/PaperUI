@@ -1,7 +1,7 @@
 import { molang } from "./ui/font/molang";
 import { ButtonElement, Element, ShapeElement, TextElement } from "./ui/screenElements";
 
-class CustomButton extends ButtonElement {
+export class CustomButton extends ButtonElement {
     constructor(width, height, string) {
         super(width, height, string)
     }
@@ -9,6 +9,13 @@ class CustomButton extends ButtonElement {
     addBox() { }
     startHoverEffect() { }
     endHoverEffect() { }
+}
+
+export class CloseButton extends ButtonElement {
+    constructor(width, height, string) {
+        super(width, height, string)
+    }
+
 }
 
 export class KeyIntElement extends Element {
@@ -27,10 +34,10 @@ export class KeyIntElement extends Element {
     }
 
     addButtons() {
-        const dec = new CustomButton(4, 9, "<")
-        const incr = new CustomButton(4, 9, ">")
-        const dec10 = new CustomButton(4, 9, "<")
-        const incr10 = new CustomButton(4, 9, ">")
+        const dec = new CustomButton(5, 9, "<")
+        const incr = new CustomButton(5, 9, ">")
+        const dec10 = new CustomButton(5, 9, "<")
+        const incr10 = new CustomButton(5, 9, ">")
 
         dec.addOnClick(() => {
             if (this.value > 0) this.value--
@@ -49,16 +56,15 @@ export class KeyIntElement extends Element {
             this.updateText()
         })
 
-        this.addElement(dec10, 34, 2)
-        this.addElement(dec, 38, 2)
-        this.addElement(incr, 44, 2)
-        this.addElement(incr10, 48, 2)
+        this.addElement(dec10, 33, 2)
+        this.addElement(dec, 37, 2)
+        this.addElement(incr, 43, 2)
+        this.addElement(incr10, 47, 2)
     }
 
     addText() {
-        const string = `${this.string}: ${this.value}`
-        this.textElement = new TextElement(string, { font: molang })
-        this.addElement(this.textElement, 4, 1)
+        this.textElement = new TextElement(`${this.string}: ${this.value}`)
+        this.addElement(this.textElement, 3, 1)
     }
 
     updateText() {
@@ -70,7 +76,6 @@ export class KeyIntElement extends Element {
 export class BlockListElement extends ButtonElement {
     constructor(width, height) {
         super(width, height)
-
     }
 }
 

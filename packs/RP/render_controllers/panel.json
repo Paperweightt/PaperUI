@@ -3,14 +3,6 @@
     "render_controllers": {
         "controller.render.panel": {
             "geometry": "Geometry.default",
-            "arrays": {
-                "textures": {
-                    "Array.variants": [
-                        "Texture.blue",
-                        "Texture.red"
-                    ]
-                }
-            },
             "textures": [
                 "Texture.default"
             ],
