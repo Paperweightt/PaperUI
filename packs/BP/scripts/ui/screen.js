@@ -1,6 +1,5 @@
 import { Panel } from "./panel"
 import { Vector } from "../util/vector"
-import { system } from "@minecraft/server"
 
 export class Screen {
 	updates = new Set()
