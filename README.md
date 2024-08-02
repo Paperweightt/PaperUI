@@ -33,7 +33,7 @@ displayText("hello world", { x: 0, y: -55, z: 0 }, overworld, { x: 0, y: 0 })
   ## Button
   
   - the buttonElement consists of a textElement as well as serveral shapeElements
-  - to have an blank buttonElement set text = ""
+  - to have a blank buttonElement set text = ""
   
 ```js
 import { buttonElement } from "./ui/screenElements"
