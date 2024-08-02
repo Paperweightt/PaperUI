@@ -3,7 +3,6 @@ PaperUI works by running animations on an entity to make pixels visible or non-v
 WARNING: 3/5 on the lag scale :')
 
 heres some basic ways the pack can be used although the real magic comes in when these are combined together to make some really interactive ui.
-
 <details>
   <summary>TextElement Example</summary>
   
