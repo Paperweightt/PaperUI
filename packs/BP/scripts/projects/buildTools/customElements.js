@@ -1,5 +1,4 @@
-import { molang } from "./ui/font/molang";
-import { ButtonElement, Element, ShapeElement, TextElement } from "./ui/screenElements";
+import { ButtonElement, Element, ShapeElement, TextElement } from "../../ui/screenElements"
 
 export class CustomButton extends ButtonElement {
     constructor(width, height, string) {

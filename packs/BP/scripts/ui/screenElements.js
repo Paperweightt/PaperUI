@@ -245,6 +245,7 @@ export class ButtonElement extends Element {
 		const id = PunchEvent.addCallback((player) => {
 			const { x, y } = this.getPointer(player)
 			if (x > 0 && y > 0 && y < this.height && x < this.width) {
+				const location = { x, y }
 				this.endHoverEffect()
 				this.hover = false
 
@@ -252,8 +253,7 @@ export class ButtonElement extends Element {
 				system.runTimeout(() => {
 					this.runHover = true
 				}, 2)
-
-				callback({ player, x, y })
+				callback({ player, location })
 			}
 		})
 		this.resetList.push(() => {

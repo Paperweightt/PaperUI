@@ -1,8 +1,3 @@
-// import "./snake"
-import "./buildToolsMenu"
-
-import { system, world } from "@minecraft/server"
-
-system.runInterval(() => {
-    // world.sendMessage(system.currentTick + "")
-}, 1)
+import "./projects/buildTools/main"
+// import "./projects/snake"
+import "./examples"

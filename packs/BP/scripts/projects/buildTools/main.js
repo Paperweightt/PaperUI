@@ -1,5 +1,5 @@
+import { ButtonElement, StackElement } from "../../ui/screenElements"
 import { Shape } from "./shape"
-import { ButtonElement, StackElement } from "./ui/screenElements"
 import { BUTTON_HEIGHT, BUTTON_WIDTH } from "./buildToolsMenu"
 import { KeyIntElement } from "./customElements"
 

@@ -1,10 +1,9 @@
 import { world } from "@minecraft/server"
-import { Vector } from "./util/vector"
-import { Screen } from "./ui/screen"
-import { StackElement, ButtonElement } from "./ui/screenElements"
-// import { CustomButton } from "./customElements"
-import { BuildTools } from "./buildTools"
-import { PunchEvent } from "./util/punchEvent"
+import { Vector } from "../../util/vector"
+import { Screen } from "../../ui/screen"
+import { StackElement, ButtonElement } from "../../ui/screenElements"
+import { BuildTools } from "./main"
+import { PunchEvent } from "../../util/punchEvent"
 
 export const BUTTON_WIDTH = 54
 export const BUTTON_HEIGHT = 13
@@ -65,5 +64,7 @@ class BuildToolMenu {
 }
 
 PunchEvent.addCallback((player) => {
+    const item = player.getComponent("inventory").container.getItem(player.selectedSlotIndex)
+    if (item?.typeId !== "minecraft:netherite_axe") return
     if (!BuildToolMenu.list[player.id]) new BuildToolMenu(player)
 })

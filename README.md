@@ -15,14 +15,15 @@ import { textElement } from "./ui/screenElements"
 import { screen } from "./ui/screen"
 import { world } from "@minecraft/server"
 
+const overworld = world.getDimension("overworld")
+
 function displayText(text, location, dimension, rotation) {
-    const screen = new screen(location, dimension, rotation)
+    const screen = new Screen(location, dimension, rotation)
     screen.addElement(new TextElement(text))
     screen.update()
 }
 
-const overworld = world.getDimension("overworld")
-displayText("hello world", {x:0, y: -55, z: 0}, {x: 0, y: 0}, overworld)
+displayText("hello world", { x: 0, y: -55, z: 0 }, overworld, { x: 0, y: 0 })
 ```
 </details>
 
@@ -39,20 +40,22 @@ import { buttonElement } from "./ui/screenElements"
 import { screen } from "./ui/screen"
 import { world } from "@minecraft/server"
 
-function displayButton(text, height, width location, dimension, rotation) {
-    const screen = new screen(location, dimension, rotation)
-    const button = new buttonElement(height, width, text)
+const overworld = world.getDimension("overworld")
 
-    button.addOnClick(()=> {
-        world.sendMessage("hello")
+function displayButton(text, height, width, location, dimension, rotation) {
+    const screen = new Screen(location, dimension, rotation)
+    const button = new ButtonElement(height, width, text)
+
+    button.addOnClick((data) => {
+        const { location: { x, y }, player } = data
+        world.sendMessage(`${player.name} clicked at ${x}, ${y}`)
     })
 
     screen.addElement(button)
     screen.update()
 }
 
-const overworld = world.getDimension("overworld")
-displayButton("button", 10, 30 {x:0, y: -55, z: 0}, overworld)
+displayButton("button", 40, 14, { x: 0, y: -55, z: 0 }, overworld)
 ```
 </details>
 
@@ -68,14 +71,19 @@ import { screen } from "./ui/screen"
 import { world } from "@minecraft/server"
 
 const overworld = world.getDimension("overworld")
-const display = new screen({x:0, y: -55, z: 0}, overworld)
 
-system.runInterval(()=> {
-    for (const player of world.getPlayers()) {
-        const {x,y} = display.getPointer(player)
+function displayWhiteboard() {
+    const display = new Screen({ x: 0, y: -55, z: 0 }, overworld)
 
-        display.setPixel(x, y, true)
-    }
-})
+    system.runInterval(() => {
+        for (const player of world.getPlayers()) {
+            const { x, y } = display.getPointer(player)
+
+            display.setPixel(x, y, true)
+        }
+    })
+}
+
+displayWhiteboard()
 ```
 </details>

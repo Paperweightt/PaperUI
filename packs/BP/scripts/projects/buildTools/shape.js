@@ -1,4 +1,4 @@
-import { Vector } from "./util/vector"
+import { Vector } from "../../util/vector"
 
 export class Shape {
     static shapes = {}

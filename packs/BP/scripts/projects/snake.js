@@ -1,7 +1,7 @@
 import { world, system } from "@minecraft/server"
-import { Vector } from "./util/vector"
-import { Screen } from "./ui/screen"
-import { ButtonElement, ShapeElement, Element, TextElement } from "./ui/screenElements"
+import { Vector } from "../util/vector"
+import { Screen } from "../ui/screen"
+import { ButtonElement, ShapeElement, Element, TextElement } from "../ui/screenElements"
 
 const overworld = world.getDimension("overworld")
 
