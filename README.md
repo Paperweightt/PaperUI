@@ -2,6 +2,7 @@ PaperUI works by running animations on an entity to make pixels visible or non-v
 
 WARNING: 3/5 on the lag scale :')
 
+## Examples
 <details>
   <summary>TextElement Example</summary>
   
@@ -86,4 +87,21 @@ function displayWhiteboard() {
 
 displayWhiteboard()
 ```
+</details>
+
+## TODOS
+<details>
+  <summary> color </summary>
+  
+  - adding color to each individual pixel is too laggy when done via render controllers
+  - swap everything over to particles possibly
+</details>
+
+<details>
+  <summary> examples </summary>
+
+  - add in some simple examples on how elements can be used together
+  - a draw tool with a button to turn the drawing into blocks
+  - button that generates another button
+  - add in a picture of the output for each example 
 </details>
