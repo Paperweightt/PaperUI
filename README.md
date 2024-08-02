@@ -2,7 +2,8 @@ PaperUI works by running animations on an entity to make pixels visible or non-v
 
 WARNING: 3/5 on the lag scale :')
 
-## Examples
+heres some basic ways the pack can be used although the real magic comes in when these are combined together to make some really interactive ui.
+
 <details>
   <summary>TextElement Example</summary>
   
@@ -34,7 +35,7 @@ displayText("hello world", { x: 0, y: -55, z: 0 }, overworld, { x: 0, y: 0 })
   ## Button
   
   - the buttonElement consists of a textElement as well as serveral shapeElements
-  - to have an blank buttonElement set text = ""
+  - to have a blank buttonElement set text = ""
   
 ```js
 import { buttonElement } from "./ui/screenElements"
@@ -92,7 +93,7 @@ displayWhiteboard()
 ## TODOS
 <details>
   <summary> color </summary>
-  
+
   - adding color to each individual pixel is too laggy when done via render controllers
   - swap everything over to particles possibly
 </details>
